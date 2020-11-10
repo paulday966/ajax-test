@@ -15,17 +15,38 @@ function getData(type, cb) {
     };
 }
 
+function getTableHeaders(obj) {
+    let tableHeaders = [];
+
+    Object.keys(obj).forEach(function(key) {
+        tableHeaders.push(`<td>${key}</td>`);
+    });
+
+    return `<tr>${tableHeaders}</tr>`;
+}
+
 function writeToDocument(type) {
     let el = document.getElementById("data");
     el.innerHTML = "";
+
     getData(type, function(data) {
         /*console.dir(data);*/
         data = data.results;
+        let tableHeaders = getTableHeaders(data[0]);
 
         data.forEach(function(item) {
+            el.innerHTML += "<p>" + InputEvent.name + "</p>";
+
+        /*data.forEach(function(item) {
+            Object.keys(item).forEach(function(key) {
+                console.log(key);
+            })
             /*document.getElementById("data").innerHTML += "<p>" + item.name + "</p>";*/
-            el.innerHTML += "<p>" + item.name + "</p>";
+            /*el.innerHTML += "<p>" + item.name + "</p>";*/
         });
+
+        el.innerHTML = `<table>${tableHeaders}</table>`
+
         /*document.getElementById("data").innerHTML = data.results;*/
     });
 }
